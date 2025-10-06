@@ -11,30 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Hent koden
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Installer JDK 21 (Temurin fra Adoptium)
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
-          cache: maven
 
-      # 3️⃣ Vis Java-version (så vi kan bekræfte at 21 bruges)
-      - name: Verify Java version
-        run: java -version
-
-      # 4️⃣ Opdater Maven-wrapper hvis nødvendigt
-      - name: Update Maven wrapper permissions
-        run: chmod +x mvnw || true
-
-      # 5️⃣ Byg projektet
       - name: Build with Maven
-        run: mvn -B clean install --file pom.xml
+        run: mvn -B package --file pom.xml
 
-      # 6️⃣ Kør tests
       - name: Run tests
         run: mvn test
